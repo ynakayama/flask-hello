@@ -74,19 +74,29 @@ def index():
 @app.route('/post', methods=['POST', 'GET'])
 def post():
     time = datetime.datetime.today().strftime("%H:%M:%S")
-    title = "ガチャを回しました！"
-    vo.count = vo.count + 1
+    message = ""
     if request.method == 'POST':
         result = []
         if 'rare' in request.form:
+            title = "ガチャを回しました！"
             vo.price = vo.price + 300
+            vo.count = vo.count + 1
             result = turn_rare()
         if '10rare' in request.form:
+            title = "ガチャを回しました！"
             vo.price = vo.price + 3000
+            vo.count = vo.count + 1
             result = turn_10rare()
+        if 'reset' in request.form:
+            title = "リセットしました"
+            vo.price = 0
+            vo.count = 0
+            result = ""
+            message = "リセットしました"
         return render_template('index.html',
                                result=result, title=title,
-                               time=time, vo=vo)
+                               time=time, vo=vo,
+                               message=message)
     else:
         return redirect(url_for('index'))
 
