@@ -7,16 +7,23 @@
     <div class="row">
       <div class="col-md-12">
         <p class="lead">
-          {% if name %}
-            こんにちは {{ name }} さん
+          {% if result %}
+            {{ time }} ガチャを回しました！<br>
+            {{ vo.count }} 回目 合計金額 {{ vo.price }} 円<br>
+            結果は
+            {% for v in result %}
+              {{ v }}
+            {% endfor %}
+            でした！
           {% else %}
             {{ message }}
           {% endif %}
         </p>
-        <form action="/post" method="post" class="form-inline">
-          <label for="name">名前</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-          <button type="submit" class="btn btn-default">送信する</button>
+        <form action="/post" method="post" name="rare" class="form-inline">
+          <button type="submit" name="rare" class="btn btn-default">レアガチャを回す</button>
+        </form>
+        <form action="/post" method="post" name="10rare" class="form-inline">
+          <button type="submit" name="10rare" class="btn btn-default">10 連レアガチャを回す</button>
         </form>
       </div>
     </div>
